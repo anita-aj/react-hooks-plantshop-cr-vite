@@ -1,93 +1,78 @@
-# Phase 2 Code Challenge: Plantsy
+# Plantsy
 
-## Demo
+A React application for a plant shop. It connects to a JSON server backend so users can browse plants, add new ones, mark plants as sold out, and search by name.
 
-Use this gif as an example of how the app should work.
+## Screenshot
 
-![Demo GIF](./demo.gif)
+![Plantsy screenshot](./plant.png)
 
-## Instructions
+## Features
 
-Welcome to Plantsy! You've been tasked with building out some features for the
-admin side of a plant store. The designers have put together the components and
-CSS. Now it's up to you to bring the features to life by adding stateful logic
-as well as persisting data to the backend via our API.
+- **View all plants:** every plant loads from the backend when the page opens.
+- **Add a plant:** fill in the name, image URL, and price, then submit. The plant is saved to the backend and appears on the page.
+- **Mark as sold out:** click the stock button on a plant card to toggle between "In Stock" and "Out of Stock". This is not saved to the backend, so it resets on refresh.
+- **Search:** type in the search box to filter plants by name. Clearing the box shows all plants again.
 
-Your job will be to make our app work according to the user stories you will
-find the [Deliverables](#Deliverables) section.
+## How It Works
 
-## Setup
+| Feature | Event | Request | State update |
+|---|---|---|---|
+| View plants | Page loads | `GET /plants` | Set `plants` to the response |
+| Add a plant | Form submit | `POST /plants` | Append the new plant |
+| Sold out | Button click | None | Toggle `inStock` in the card |
+| Search | Typing | None | Update `searchTerm` and filter the list |
 
-1. Run `npm install` in your terminal.
-2. Run `npm run server`. This will run your backend on port `6001`.
-3. In a new terminal, run `npm run dev`.
+## Component Structure
 
-Make sure to open [http://localhost:6001/plants](http://localhost:6001/plants)
-in the browser to verify that your backend is working before you proceed!
+- `App`: renders the header and the plant page.
+- `Header`: displays the app title.
+- `PlantPage`: holds the `plants` and `searchTerm` state, fetches plants, and filters them.
+- `NewPlantForm`: controlled form that sends the POST request.
+- `Search`: controlled search input.
+- `PlantList`: renders a `PlantCard` for each plant.
+- `PlantCard`: displays one plant and tracks its own stock status.
 
-## Endpoints
+## Getting Started
 
-The base URL for your backend is: `http://localhost:6001`
+### Prerequisites
 
-## Deliverables
+- [Node.js](https://nodejs.org/) and npm
 
-As a user:
+### Installation
 
-1. When the app starts, I can see all plants.
-2. I can add a new plant to the page by submitting the form.
-3. I can mark a plant as "sold out".
-4. I can search for plants by their name and see a filtered list of plants.
-
-### Endpoints for Core Deliverables
-
-#### GET /plants
-
-Example Response:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Aloe",
-    "image": "./images/aloe.jpg",
-    "price": 15.99
-  },
-  {
-    "id": 2,
-    "name": "ZZ Plant",
-    "image": "./images/zz-plant.jpg",
-    "price": 25.98
-  }
-]
+```bash
+git clone <your-repository-url>
+cd <repository-folder>
+npm install
 ```
 
-#### POST `/plants`
+### Running the App
 
-Required Headers:
+Start the backend (runs on `http://localhost:6001`):
 
-```js
-{
-  "Content-Type": "application/json"
-}
+```bash
+npm run server
 ```
 
-Request Object:
+In a second terminal, start the React app:
 
-```json
-{
-  "name": "string",
-  "image": "string",
-  "price": number
-}
+```bash
+npm run dev
 ```
 
-Example Response:
+Then open the local URL shown in the terminal.
 
-```json
-{
-  "id": 1,
-  "name": "Aloe",
-  "image": "./images/aloe.jpg",
-  "price": 15.99
-}
+### Running the Tests
+
+```bash
+npm run test
 ```
+
+## Tech Stack
+
+- React
+- JSON Server
+- Vitest / React Testing Library
+
+## Author
+Anita
