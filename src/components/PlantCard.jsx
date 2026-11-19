@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 
 function PlantCard({ plant }) {
   const { name, image, price } = plant;
+  // Each card tracks its own stock status (not saved to the backend)
+  const [inStock, setInStock] = useState(true);
+
+  // Flip between in stock and out of stock
+  function handleToggleStock() {
+    setInStock((inStock) => !inStock);
+  }
 
   return (
     <li className="card" data-testid="plant-item">
       <img src={image} alt={name} />
       <h4>{name}</h4>
       <p>Price: {price}</p>
-      {true ? (
-        <button className="primary">In Stock</button>
+      {inStock ? (
+        <button className="primary" onClick={handleToggleStock}>
+          In Stock
+        </button>
       ) : (
-        <button>Out of Stock</button>
+        <button onClick={handleToggleStock}>Out of Stock</button>
       )}
     </li>
   );
