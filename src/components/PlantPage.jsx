@@ -6,6 +6,8 @@ import Search from "./Search";
 function PlantPage() {
   // All plants from the backend
   const [plants, setPlants] = useState([]);
+  // What the user has typed in the search box
+  const [searchTerm, setSearchTerm] = useState("");
 
   // GET: load all plants once, when the page first renders
   useEffect(() => {
@@ -19,11 +21,17 @@ function PlantPage() {
     setPlants([...plants, newPlant]);
   }
 
+  // Show only plants whose name contains the search term (case-insensitive).
+  // An empty search term matches every plant, so clearing the box shows all.
+  const plantsToDisplay = plants.filter((plant) =>
+    plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <main>
       <NewPlantForm onAddPlant={handleAddPlant} />
-      <Search />
-      <PlantList plants={plants} />
+      <Search searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      <PlantList plants={plantsToDisplay} />
     </main>
   );
 }
