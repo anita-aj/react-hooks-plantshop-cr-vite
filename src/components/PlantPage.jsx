@@ -14,9 +14,14 @@ function PlantPage() {
       .then((data) => setPlants(data));
   }, []);
 
+  // Add the plant returned by the server to the end of the list
+  function handleAddPlant(newPlant) {
+    setPlants([...plants, newPlant]);
+  }
+
   return (
     <main>
-      <NewPlantForm />
+      <NewPlantForm onAddPlant={handleAddPlant} />
       <Search />
       <PlantList plants={plants} />
     </main>
